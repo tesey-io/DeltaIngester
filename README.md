@@ -69,6 +69,7 @@ spark-submit \
 -m yarn-cluster target/delta-ingester-0.0.1-SNAPSHOT.jar \
 --endpointsConfigPath hdfs:///configs/endpoints.json \
 --tablesConfigPath hdfs:///configs/tables.json \
+--schemasPath hdfs:///schemas \
 --source-name test-db \
 --sink-name test-parquet \
 --mode daily
