@@ -42,7 +42,7 @@ mvn clean install
 4. Describe tables configs in tables.json similar to following:
 ```json
 {
-    "entities": [
+    "tables": [
         {
             "name" : "test",
             "options" : [
