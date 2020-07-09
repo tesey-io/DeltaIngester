@@ -66,7 +66,7 @@ spark-submit \
 --num-executors 2 \
 --driver-memory 512m \
 --executor-memory 512m \
--m yarn-cluster target/delta-ingester-0.0.1-SNAPSHOT.jar \
+-m yarn-cluster target/tesey-delta-ingester-1.0-SNAPSHOT.jar \
 --endpointsConfigPath hdfs:///configs/endpoints.json \
 --tablesConfigPath hdfs:///configs/tables.json \
 --schemasPath hdfs:///schemas \
