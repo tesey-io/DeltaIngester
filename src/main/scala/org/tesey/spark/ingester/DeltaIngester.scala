@@ -25,8 +25,8 @@ object DeltaIngester extends App with LazyLogging {
     "endpointsConfigPath" -> ("Path to endpoints config file", "<endpointsConfigPath>"),
     "tablesConfigPath"    -> ("Path to tables config file", "<tablesConfigPath>"),
     "schemasPath"         -> ("Path to Avro schemas", "<tablesConfigPath>"),
-    "sourceName"          -> ("Name of endpoint used as a data source", "<sourceName>"),
-    "sinkName"            -> ("Name of endpoint used as a data sink", "<sinkName>"),
+    "sourceName"          -> ("Name of endpoint that is used as a data source", "<sourceName>"),
+    "sinkName"            -> ("Name of endpoint that is used as a data sink", "<sinkName>"),
     "mode"                -> ("Ingestion mode (completely/daily/incrementally)", "<mode>")
   )
 
