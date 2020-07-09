@@ -17,7 +17,7 @@ limitations under the License.
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.tesey.spark.ingester</groupId>
-    <artifactId>delta-ingester</artifactId>
+    <artifactId>tesey-delta-ingester</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
