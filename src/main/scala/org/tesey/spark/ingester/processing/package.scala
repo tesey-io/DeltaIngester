@@ -116,11 +116,11 @@ package object processing {
 
     val dbUrl = getOptionFromConfig("url", tableOptions)
 
-    var oracleJdbcConnectionString = ""
+    var jdbcConnectionString = ""
 
     if (dbUrl.isDefined) {
 
-      oracleJdbcConnectionString = dbUrl.get.value
+      jdbcConnectionString = dbUrl.get.value
 
     } else {
 
@@ -132,7 +132,7 @@ package object processing {
 
       if (host.isDefined && port.isDefined && dbName.isDefined) {
 
-        oracleJdbcConnectionString = dbType match {
+        jdbcConnectionString = dbType match {
           case "oracle" => s"jdbc:oracle:thin:/@${host.get.value}:${port.get.value}/${dbName.get.value}"
           case _ => ""
         }
@@ -161,13 +161,23 @@ package object processing {
       case _ => s"${tableName}"
     }
 
-    sparkSession.read.option("sessionInitStatement", "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'")
-      .option("sessionInitStatement", "alter session set nls_timestamp_format='YYYY-MM-DD HH24:MI:SS.FF6'")
-      .option("oracle.jdbc.mapDateToTimestamp", "false")
-      .option("driver", "oracle.jdbc.driver.OracleDriver")
-      .option("isolationLevel", "READ_COMMITTED")
+    val driver = getOptionValueFromConfig("driver", sourceOptions)
+
+    val options = dbType match {
+      case "oracle" => Map(
+        "sessionInitStatement"           -> "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'",
+        "sessionInitStatement"           -> "ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS.FF6'",
+        "oracle.jdbc.mapDateToTimestamp" -> "false",
+        "isolationLevel"                 -> "READ_COMMITTED"
+      )
+      case _ => Map("" -> "")
+    }
+
+    sparkSession.read
+      .options(options)
+      .option("driver", driver)
       .jdbc(
-        oracleJdbcConnectionString,
+        jdbcConnectionString,
         query,
         credentials
       )

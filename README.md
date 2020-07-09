@@ -21,6 +21,7 @@ mvn clean install
                 {"name": "port", "value": "1521"},
                 {"name": "dbName", "value": "test"},
                 {"name": "dbType", "value": "oracle"},
+                {"name": "driver", "value": "oracle.jdbc.driver.OracleDriver"},
                 {"name": "user", "value": "root"},
                 {"name": "credentialProviderPath", "value": "jceks://hdfs/user/hadoop/test-root-key.jceks"},
                 {"name": "passwordAlias", "value": "oracle.password.alias"}
@@ -87,6 +88,14 @@ spark-submit \
 <tbody>
 <tr>
 <td>
+<code>url</code></br>
+string</td>
+<td>
+Database connection URL
+</td>
+</tr>
+<tr>
+<td>
 <code>host</code></br>
 string</td>
 <td>
@@ -115,6 +124,14 @@ The name of source database
 string</td>
 <td>
 The name of RDBMS. Currently supported `oracle`
+</td>
+</tr>
+<tr>
+<td>
+<code>driver</code></br>
+string</td>
+<td>
+Database driver
 </td>
 </tr>
 <tr>
