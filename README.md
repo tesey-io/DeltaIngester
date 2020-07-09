@@ -46,8 +46,8 @@ mvn clean install
         {
             "name" : "test",
             "options" : [
-                {"name": "schema", "value": "test.avsc"},
                 {"name": "tableName", "value": "test"},
+                {"name": "schema", "value": "test.avsc"},
                 {"name": "mode", "value": "daily"},
                 {"name": "checkField", "value": "load_date"},
                 {"name": "partitionKeys", "value": "load_date"}
@@ -75,7 +75,7 @@ spark-submit \
 --mode daily
 ```
 
-<h2 id="deltaingester.io/EndpointsSpecification">Tables specification
+<h2 id="deltaingester.io/EndpointsSpecification">Endpoints specification
 </h2>
 <table>
 <thead>
@@ -267,7 +267,7 @@ The path to Avro schemas
 <code>sourceName</code></br>
 string</td>
 <td>
-The Name of endpoint that is used as a data source
+The name of endpoint that is used as a data source
 </td>
 </tr>
 <tr>
