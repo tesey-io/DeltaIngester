@@ -67,12 +67,12 @@ spark-submit \
 --num-executors 2 \
 --driver-memory 512m \
 --executor-memory 512m \
--m yarn-cluster target/tesey-delta-ingester-1.0-SNAPSHOT.jar \
+./target/tesey-delta-ingester-1.0-SNAPSHOT.jar \
 --endpointsConfigPath hdfs:///configs/endpoints.json \
 --tablesConfigPath hdfs:///configs/tables.json \
 --schemasPath hdfs:///schemas \
---source-name test-db \
---sink-name test-parquet \
+--sourceName test-db \
+--sinkName test-parquet \
 --mode daily
 ```
 
@@ -123,7 +123,7 @@ The name of source database
 <code>dbType</code></br>
 string</td>
 <td>
-The name of RDBMS. Currently supported `oracle`
+The name of RDBMS. Currently supported <code>oracle</code>
 </td>
 </tr>
 <tr>
@@ -213,9 +213,9 @@ string</td>
 <td>
 The ingestion mode. The possible options:
 
-* completely - ingesting all rows from source table
-* incrementally - ingesting rows where check column has a value greater than the one specified with `lastValue`
-* daily - ingesting rows from source table inserted in previous day 
+* <code>completely</code> - ingesting all rows from source table
+* <code>incrementally</code> - ingesting rows where check column has a value greater than the one specified with <code>lastValue</code>
+* <code>daily</code> - ingesting rows from source table inserted in previous day 
 </td>
 </tr>
 <tr>
@@ -223,7 +223,7 @@ The ingestion mode. The possible options:
 <code>checkField</code></br>
 string</td>
 <td>
-The check column used to identify rows that should be ingested in modes `incrementally` and `daily`
+The check column used to identify rows that should be ingested in modes <code>incrementally</code> and <code>daily</code>
 </td>
 </tr>
 <tr>
@@ -231,7 +231,7 @@ The check column used to identify rows that should be ingested in modes `increme
 <code>lastValue</code></br>
 string</td>
 <td>
-The maximum value of check column in the previous ingestion, used to indentify rows that should be ingested in mode `incrementally`
+The maximum value of check column in the previous ingestion, used to indentify rows that should be ingested in mode <code>incrementally</code>
 </td>
 </tr>
 <tr>
@@ -300,7 +300,7 @@ The name of endpoint that is used as a data sink
 <code>mode</code></br>
 string</td>
 <td>
-The ingestion mode (completely/daily/incrementally)
+The ingestion mode (<code>completely</code>/<code>daily</code>/<code>incrementally</code>)
 </td>
 </tr>
 </tbody>
