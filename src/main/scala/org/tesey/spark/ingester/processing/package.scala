@@ -48,8 +48,8 @@ package object processing {
     }
 
     val writeMode = mode match {
-      case "daily" => "append"
-      case _ => "overwrite"
+      case "completely" => "overwrite"
+      case _ => "append"
     }
 
     val tableSchemaLocation = getOptionFromConfig("schema", tableOptions)
