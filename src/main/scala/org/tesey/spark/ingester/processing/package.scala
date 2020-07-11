@@ -114,7 +114,7 @@ package object processing {
 
     val dbType = dbTypeOption.get.value
 
-    val dbUrl = getOptionFromConfig("url", tableOptions)
+    val dbUrl = getOptionFromConfig("url", sourceOptions)
 
     var jdbcConnectionString = ""
 
@@ -163,7 +163,7 @@ package object processing {
 
     val driver = getOptionValueFromConfig("driver", sourceOptions)
 
-    val options = dbType match {
+    var options = dbType match {
       case "oracle" => Map(
         "sessionInitStatement"           -> "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'",
         "sessionInitStatement"           -> "ALTER SESSION SET NLS_TIMESTAMP_FORMAT = 'YYYY-MM-DD HH24:MI:SS.FF6'",
@@ -173,9 +173,29 @@ package object processing {
       case _ => Map("" -> "")
     }
 
+    val partitionColumn = getOptionFromConfig("partitionColumn", tableOptions)
+
+    val lowerBound = getOptionFromConfig("lowerBound", tableOptions)
+
+    val upperBound = getOptionFromConfig("upperBound", tableOptions)
+
+    val numPartitions = getOptionFromConfig("numPartitions", tableOptions)
+
+    if (partitionColumn.isDefined && lowerBound.isDefined && upperBound.isDefined && numPartitions.isDefined) {
+
+      options = options ++ Map(
+        "partitionColumn" -> partitionColumn.get,
+        "lowerBound" -> lowerBound.get,
+        "upperBound" -> upperBound.get,
+        "numPartitions" -> numPartitions.get
+      )
+
+    }
+
+    options = options ++ Map("driver" -> driver)
+
     sparkSession.read
       .options(options)
-      .option("driver", driver)
       .jdbc(
         jdbcConnectionString,
         query,
