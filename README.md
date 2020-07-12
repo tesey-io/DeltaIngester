@@ -173,6 +173,14 @@ The <a href="https://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-c
 </tr>
 <tr>
 <td>
+<code>batchSize</code></br>
+string</td>
+<td>
+The JDBC batch size, which determines how many rows to ingest per round trip
+</td>
+</tr>
+<tr>
+<td>
 <code>location</code></br>
 string</td>
 <td>
@@ -285,6 +293,14 @@ The maximum value of <code>partitionColumn</code> to read
 string</td>
 <td>
 The maximum number of partitions used for parallelism in table reading
+</td>
+</tr>
+<tr>
+<td>
+<code>batchSize</code></br>
+string</td>
+<td>
+The JDBC batch size, which determines how many rows to ingest per round trip
 </td>
 </tr>
 </tbody>
