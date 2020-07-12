@@ -45,13 +45,26 @@ mvn clean install
 {
     "tables": [
         {
-            "name" : "test",
+            "name" : "test_daily",
             "options" : [
                 {"name": "tableName", "value": "test"},
                 {"name": "schema", "value": "test.avsc"},
                 {"name": "mode", "value": "daily"},
                 {"name": "checkField", "value": "load_date"},
                 {"name": "partitionKeys", "value": "load_date"}
+            ]
+        },
+        {
+            "name" : "test",
+            "options" : [
+                {"name": "tableName", "value": "test"},
+                {"name": "schema", "value": "test.avsc"},
+                {"name": "mode", "value": "completely"},
+                {"name": "partitionKeys", "value": "load_date"},
+                {"name": "partitionColumn", "value": "load_date"},
+                {"name": "lowerBound", "value": "2020-06-28"},
+                {"name": "upperBound", "value": "2020-06-30"},
+                {"name": "numPartitions", "value": "3"},
             ]
         }
     ]
@@ -239,7 +252,39 @@ The maximum value of check column in the previous ingestion, used to indentify r
 <code>partitionKeys</code></br>
 string</td>
 <td>
-A comma-separated list of fields which is used for partitioning the output datasets on
+A comma-separated list of fields which is used for partitioning the output dataset on
+</td>
+</tr>
+<tr>
+<td>
+<code>partitionColumn</code></br>
+string</td>
+<td>
+When reading rows from the JDBC source data should be partitioned on the given column
+</td>
+</tr>
+<tr>
+<td>
+<code>lowerBound</code></br>
+string</td>
+<td>
+The minimum value of <code>partitionColumn</code> to read
+</td>
+</tr>
+<tr>
+<td>
+<code>upperBound</code></br>
+string</td>
+<td>
+The maximum value of <code>partitionColumn</code> to read
+</td>
+</tr>
+<tr>
+<td>
+<code>numPartitions</code></br>
+string</td>
+<td>
+The maximum number of partitions used for parallelism in table reading
 </td>
 </tr>
 </tbody>
