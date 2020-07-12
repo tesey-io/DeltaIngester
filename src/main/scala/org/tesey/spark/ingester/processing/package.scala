@@ -192,6 +192,20 @@ package object processing {
 
     }
 
+    val tableBatchSize = getOptionFromConfig("batchSize", tableOptions)
+
+    val sourceBatchSize = getOptionFromConfig("batchSize", sourceOptions)
+
+    if (tableBatchSize.isDefined) {
+      options = options ++ Map(
+        "batchsize" -> tableBatchSize.get
+      )
+    } else if (sourceBatchSize.isDefined) {
+      options = options ++ Map(
+        "batchsize" -> sourceBatchSize.get
+      )
+    }
+
     options = options ++ Map("driver" -> driver)
 
     sparkSession.read
