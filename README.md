@@ -50,7 +50,7 @@ mvn clean install
                 {"name": "tableName", "value": "test"},
                 {"name": "schema", "value": "test.avsc"},
                 {"name": "mode", "value": "daily"},
-                {"name": "checkField", "value": "load_date"},
+                {"name": "checkColumn", "value": "load_date"},
                 {"name": "partitionKeys", "value": "load_date"}
             ]
         },
@@ -241,7 +241,7 @@ The ingestion mode. The possible options:
 </tr>
 <tr>
 <td>
-<code>checkField</code></br>
+<code>checkColumn</code></br>
 string</td>
 <td>
 The check column used to identify rows that should be ingested in modes <code>incrementally</code> and <code>daily</code>
@@ -361,7 +361,7 @@ The name of endpoint that is used as a data sink
 <code>mode</code></br>
 string</td>
 <td>
-The ingestion mode (<code>completely</code>/<code>daily</code>/<code>incrementally</code>)
+The ingestion mode (<code>completely</code>/<code>incrementally</code>/<code>daily</code>)
 </td>
 </tr>
 </tbody>
