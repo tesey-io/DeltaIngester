@@ -154,10 +154,10 @@ package object processing {
 
     val query = mode match {
       case "incrementally" => getQueryToIngestIncrementally(tableName,
-        getOptionValueFromConfig("checkField", tableOptions, logger),
+        getOptionValueFromConfig("checkColumn", tableOptions, logger),
         getOptionValueFromConfig("lastValue", tableOptions, logger))
       case "daily" => getQueryToIngestDaily(tableName,
-        getOptionValueFromConfig("checkField", tableOptions, logger), dbType)
+        getOptionValueFromConfig("checkColumn", tableOptions, logger), dbType)
       case _ => s"${tableName}"
     }
 
@@ -184,10 +184,10 @@ package object processing {
     if (partitionColumn.isDefined && lowerBound.isDefined && upperBound.isDefined && numPartitions.isDefined) {
 
       options = options ++ Map(
-        "partitionColumn" -> partitionColumn.get,
-        "lowerBound" -> lowerBound.get,
-        "upperBound" -> upperBound.get,
-        "numPartitions" -> numPartitions.get
+        "partitionColumn" -> partitionColumn.get.value,
+        "lowerBound" -> lowerBound.get.value,
+        "upperBound" -> upperBound.get.value,
+        "numPartitions" -> numPartitions.get.value
       )
 
     }
@@ -198,11 +198,11 @@ package object processing {
 
     if (tableBatchSize.isDefined) {
       options = options ++ Map(
-        "batchsize" -> tableBatchSize.get
+        "batchsize" -> tableBatchSize.get.value
       )
     } else if (sourceBatchSize.isDefined) {
       options = options ++ Map(
-        "batchsize" -> sourceBatchSize.get
+        "batchsize" -> sourceBatchSize.get.value
       )
     }
 
@@ -218,7 +218,7 @@ package object processing {
 
   }
 
-  def getQueryToIngestDaily(tableName: String, checkField: String, dbType: String): String = {
+  def getQueryToIngestDaily(tableName: String, checkColumn: String, dbType: String): String = {
 
     val prevDate = ZonedDateTime.now(ZoneId.of("UTC")).minusDays(1)
 
@@ -226,17 +226,17 @@ package object processing {
 
     val prevDateString = formatter format prevDate
 
-    val checkFieldValue = dbType match {
+    val checkColumnValue = dbType match {
       case "oracle" => s"TO_DATE('$prevDateString','$DEFAULT_DATE_FORMAT')"
       case _        => s"'$prevDateString'"
     }
 
-    s"(SELECT * FROM $tableName WHERE $checkField = $checkFieldValue)"
+    s"(SELECT * FROM $tableName WHERE $checkColumn = $checkColumnValue)"
   }
 
-  def getQueryToIngestIncrementally(tableName: String, checkField: String, lastValue: String): String = {
+  def getQueryToIngestIncrementally(tableName: String, checkColumn: String, lastValue: String): String = {
 
-    s"(SELECT * FROM $tableName WHERE $checkField >= $lastValue)"
+    s"(SELECT * FROM $tableName WHERE $checkColumn >= $lastValue)"
 
   }
 
